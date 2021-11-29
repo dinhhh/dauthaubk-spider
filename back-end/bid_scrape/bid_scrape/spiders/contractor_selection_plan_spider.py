@@ -9,7 +9,7 @@ class ContractorSelectionPlanSpider(scrapy.Spider):
     second_key = "Số KHLCNT"
 
     FROM_PAGE = 1
-    TO_PAGE = 2  # 14/11/2021: fetched first 200 pages of 10 plan (no log file)
+    TO_PAGE = 100  # 14/11/2021: fetched first 200 pages of 10 plan (no log file)
 
     NGAY_DANG_TAI = "Ngày đăng tải"
     NGAY_PHE_DUYET = "Ngày phê duyệt"

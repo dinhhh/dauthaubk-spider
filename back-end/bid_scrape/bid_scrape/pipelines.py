@@ -9,6 +9,7 @@ import pymongo
 import logging
 from .spiders.bidding_result_spider import AwardResultSpider
 from .spiders.spider_constants import DocumentConstants, CollectionConstants
+from .spiders.online_bid_opening_result_spider import OnlineBidOpeningResultSpider
 
 class BidScrapePipeline:
     def process_item(self, item, spider):
@@ -40,6 +41,21 @@ def build_contractor_history_item(item):
     }
     return add_to_set_item
 
+
+def build_bid_info(item):
+    spec_info = item.get(DocumentConstants.THONG_TIN_CHI_TIET, {})
+    if not bool(spec_info):
+        return {}
+    return {
+        DocumentConstants.SO_TBMT: spec_info.get(DocumentConstants.SO_TBMT, ""),
+        DocumentConstants.TEN_GOI_THAU: spec_info.get(DocumentConstants.TEN_GOI_THAU, ""),
+        DocumentConstants.TEN_DU_AN_DU_TOAN_MUA_SAM: spec_info.get(DocumentConstants.TEN_DU_AN_DU_TOAN_MUA_SAM, ""),
+        DocumentConstants.BEN_MOI_THAU: spec_info.get(DocumentConstants.BEN_MOI_THAU, ""),
+        DocumentConstants.NGAY_PHE_DUYET: spec_info.get(DocumentConstants.NGAY_PHE_DUYET, ""),
+        DocumentConstants.LINH_VUC: spec_info.get(DocumentConstants.LINH_VUC, ""),
+        DocumentConstants.KET_QUA: DocumentConstants.TRUNG_THAU,
+        DocumentConstants.GIA_GOI_THAU: spec_info.get(DocumentConstants.GIA_GOI_THAU, "")
+    }
 
 class MongoPipeline:
     def __init__(self, mongo_uri, mongo_db):
@@ -88,3 +104,35 @@ class MongoPipeline:
                 {"$addToSet": {DocumentConstants.GOI_THAU_DA_THAM_GIA: add_to_set_item}},
                 upsert=True
             )
+        if spider.name == OnlineBidOpeningResultSpider.name:
+            logging.info("Start update contractor history...")
+            if len(item.get(DocumentConstants.KET_QUA, [])) == 0:
+                raise Exception("[Spider exception] Bidding result doesn't have result")
+            contractors_name = [c.get(DocumentConstants.TEN_NHA_THAU) for c in item.get(DocumentConstants.KET_QUA, [])]
+            bid_info = build_bid_info(item=item)
+            logging.info("Add to set in online bid result pipeline")
+            for name in contractors_name:
+                logging.info("name: {}".format(name))
+                index = contractors_name.index(name)
+                result = item.get(DocumentConstants.KET_QUA, [])
+                if len(result) < 1:
+                    break
+                bid_info[DocumentConstants.GIA_DU_THAU] = result[index].get(DocumentConstants.GIA_DU_THAU, "")
+                bid_info[DocumentConstants.GIA_DU_THAU_SAU_GIAM_GIA] = result[index].get(
+                    DocumentConstants.GIA_DU_THAU_SAU_GIAM_GIA, "")
+                bid_info[DocumentConstants.BAO_DAM_DU_THAU] = result[index].get(
+                    DocumentConstants.BAO_DAM_DU_THAU, "")
+
+                co_winning = []
+                for co_winning_name in list(filter(lambda c: c != name, contractors_name)):
+                    co_winning.append({
+                        DocumentConstants.TEN_NHA_THAU: co_winning_name,
+                        DocumentConstants.GIA_GOI_THAU: ""
+                    })
+                bid_info[DocumentConstants.CAC_NHA_THAU_TRUNG_THAU_KHAC] = co_winning
+                logging.info("Adding item {}".format(bid_info))
+                self.db[CollectionConstants.CONTRACTOR_HISTORY].update(
+                    {DocumentConstants.TEN_NHA_THAU: name},
+                    {"$addToSet": {DocumentConstants.GOI_THAU_DA_THAM_GIA: bid_info}},
+                    upsert=True
+                )

@@ -2,8 +2,17 @@ class XpathConstants:
     GET_TEXT = "text()"
     GET_ALL_CHILDREN_TEXT = "//text()"
     GET_A_TAG = "/a"
-    XPATH_GET_NGAY_PHE_DUYET = '/html/body/div[1]/div/div/div/div[1]/div/div/section[2]/div/div/div[1]/div/div/div[1]/div/h3/text()'
-    XPATH_GET_NGAY_DANG_TAI = '/html/body/div/div/div/div/div[1]/div/div/section[2]/div/div/div[1]/div/div/div[2]/div/h3/text()'
+    XPATH_GET_NGAY_PHE_DUYET = "//h4[text() = 'Ngày phê duyệt']/following-sibling::h3/text()"
+    XPATH_GET_NGAY_DANG_TAI = "//h4[text() = 'Ngày đăng tải']/following-sibling::h3/text()"
+    XPATH_GET_THOI_DIEM_DANG_TAI = "//h4[text() = 'Thời điểm đăng tải']/following-sibling::h3/text()"
+    XPATH_GET_THOI_DIEM_DONG_THAU = "//h4[text() = 'Thời điểm đóng thầu']/following-sibling::h3/text()"
+    XPATH_GET_TR_TAG_THONG_TIN_CHI_TIET = "//span[text() = 'THÔNG TIN CHI " \
+                                          "TIẾT']/../following-sibling::div/div/div/table/tr"
+    XPATH_GET_TR_TAG_THAM_DU_THAU = "//span[text() = 'Tham dự thầu']/../following-sibling::div/div/div/table/tr"
+    XPATH_GET_TR_TAG_MOI_THAU = "//span[text() = 'MỜI THẦU']/../following-sibling::div/div/div/table/tr"
+    XPATH_GET_TR_TAG_BAO_DAM_DU_THAU = "//span[text() = 'BẢO ĐẢM DỰ THẦU']/../following-sibling::div/div/div/table/tr"
+    XPATH_GET_HINH_THUC_THAU = "//div[@class = 'bg-l2']/h3/text()"
+    XPATH_GET_LINKS = "//a[@class = 'container-tittle']/@href"
 
 
 class DocumentConstants:
@@ -46,6 +55,12 @@ class DocumentConstants:
     HO_SO_MOI_THAU = "Hồ sơ mời thầu"
     LAM_RO_E_HSMT = "Làm rõ E-HSMT"
     THONG_BAO_LIEN_QUAN = "Thông báo liên quan"
+    THOI_DIEM_DANG_TAI = "Thời điểm đăng tải"
+    THOI_DIEM_DONG_THAU = "Thời điểm đóng thầu"
+    SO_TBMT = "Số TBMT"
+    GIA_DU_THAU = "Giá dự thầu (VND)"
+    GIA_DU_THAU_SAU_GIAM_GIA = "Giá dự thầu sau giảm giá (VND)"
+    MOI_THAU = "Mời thầu"
 
 
 class CollectionConstants:

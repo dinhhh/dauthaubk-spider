@@ -9,7 +9,7 @@ class ContractorSpider(scrapy.Spider):
     second_key = "Số ĐKKD"
 
     FROM_PAGE = 1
-    TO_PAGE = 10
+    TO_PAGE = 5000
     THONG_TIN_CHUNG = "THÔNG TIN CHUNG"
     THONG_TIN_NGANH_NGHE = "THÔNG TIN NGÀNH NGHỀ"
     XPATH_GET_THONG_TIN_CHUNG = "//h3[text() = '{}']/following-sibling::div/div/div/table/tr/td"

@@ -13,7 +13,7 @@ class AwardResultSpider(scrapy.Spider):
     second_key = "Số hiệu KHLCNT"
 
     FROM_PAGE = 1
-    TO_PAGE = 5
+    TO_PAGE = 1
 
     DINH_KEM_THONG_BAO = 'Đính kèm thông báo kết quả LCNT'
     LINH_VUC = "Lĩnh vực: "
