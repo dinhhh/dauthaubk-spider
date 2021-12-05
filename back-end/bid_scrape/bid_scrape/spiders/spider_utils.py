@@ -138,10 +138,8 @@ class SpiderUtils:
             contents = response.xpath(xpath_get_td).extract()
             if len(contents) < 1:
                 logging.error(
-                    SpiderUtils.LOGGING_TAG + " cell {} haven't content in page {} xpath {} contents {}".format(i,
-                                                                                                                response.url,
-                                                                                                                xpath_get_tr_tag,
-                                                                                                                contents))
+                    SpiderUtils.LOGGING_TAG + " cell {} haven't content in page {} xpath {} contents {}"
+                    .format(i, response.url, xpath_get_tr_tag, contents))
                 break
             title = contents[0].strip()
             if len(contents) == 2:
@@ -151,9 +149,8 @@ class SpiderUtils:
                 result[title] = SpiderUtils.get_children_tag_text(response, xpath_get_td, tags)
             else:
                 flag = title == DocumentConstants.THONG_BAO_LIEN_QUAN
-                document_with_link = SpiderUtils.parse_a_cell_with_multi_attach_files(response,
-                                                                                      xpath_get_tr_tag + "[{}]/td[2]".format(i),
-                                                                                      flag)
+                document_with_link = SpiderUtils.parse_a_cell_with_multi_attach_files(
+                    response, xpath_get_tr_tag + "[{}]/td[2]".format(i), flag)
                 result[title] = document_with_link
         return result
 
@@ -169,6 +166,8 @@ class SpiderUtils:
     @staticmethod
     def parse_a_cell_with_multi_attach_files(response, xpath_get_td_tag, is_no_name=False):
         # xpath_get_td_tag sample: div/div/div/table/tr[3]/td[1]
+        logging.info(SpiderUtils.LOGGING_TAG + " parse a cell in url {} xpath_get_td {} is_no_name {}"
+                     .format(response.url, xpath_get_td_tag, is_no_name))
         if is_no_name:
             return SpiderUtils.parse_a_cell_with_multi_link_with_out_name(response, xpath_get_td_tag)
         result = []

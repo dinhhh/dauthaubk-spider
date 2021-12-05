@@ -4,7 +4,8 @@ from .spider_constants import XpathConstants, DocumentConstants
 
 
 class BiddingExtensionCorrectionSpider(scrapy.Spider):
-    name = "bidding_extension_correction_spider"
+    # Thông báo gia hạn / đính chính cho nhà thầu
+    name = "contractor_bidding_correction"
     start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
     XPATH_GET_LINKS = "//a[@class = 'container-tittle']/@href"

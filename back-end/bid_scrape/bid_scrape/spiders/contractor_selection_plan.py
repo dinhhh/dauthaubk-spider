@@ -1,15 +1,11 @@
 import scrapy
 from .spider_constants import DocumentConstants
+from .spider_utils import SpiderUtils
 
 class ContractorSelectionPlanSpider(scrapy.Spider):
+    # Kế hoạch lựa chọn nhà thầu cho nhà thầu
     name = "contractor_selection_plan"
-    start_urls = []
-    collection_name = "contractorSelectionPlans"
-    first_key = "Thông tin chi tiết"
-    second_key = "Số KHLCNT"
-
-    FROM_PAGE = 1
-    TO_PAGE = 100  # 14/11/2021: fetched first 200 pages of 10 plan (no log file)
+    start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
     NGAY_DANG_TAI = "Ngày đăng tải"
     NGAY_PHE_DUYET = "Ngày phê duyệt"
@@ -31,19 +27,6 @@ class ContractorSelectionPlanSpider(scrapy.Spider):
     XPATH_GET_NEXT_PAGE = "//li[@class ='active']/following-sibling::li[1]/a/@href"
 
     GET_TEXT = "text()"
-
-    def __init__(self):
-        url = "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=MU4CklVCZI&p_p_id=luachonnhathau_WAR_bidportlet" \
-              "&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2" \
-              "&_luachonnhathau_WAR_bidportlet_timKiemTheo=1&_luachonnhathau_WAR_bidportlet_time=3" \
-              "&_luachonnhathau_WAR_bidportlet_denNgay=14-11-2021&_luachonnhathau_WAR_bidportlet_tuNgay=14-05-2021" \
-              "&_luachonnhathau_WAR_bidportlet_loaiThongTin=1&_luachonnhathau_WAR_bidportlet_searchText" \
-              "=&_luachonnhathau_WAR_bidportlet_sapXep=DESC&_luachonnhathau_WAR_bidportlet_currentPage={}" \
-              "&_luachonnhathau_WAR_bidportlet_dongMo=0&_luachonnhathau_WAR_bidportlet_displayItem=10" \
-              "&_luachonnhathau_WAR_bidportlet_chuDauTu=&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list"
-
-        for i in range(self.FROM_PAGE, self.TO_PAGE + 1):
-            self.start_urls.append(url.format(i))
 
     def parse(self, response):
         self.log('response url: ' + response.url)

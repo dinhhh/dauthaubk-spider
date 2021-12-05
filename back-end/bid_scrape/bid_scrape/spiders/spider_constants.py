@@ -6,11 +6,13 @@ class XpathConstants:
     XPATH_GET_NGAY_DANG_TAI = "//h4[text() = 'Ngày đăng tải']/following-sibling::h3/text()"
     XPATH_GET_THOI_DIEM_DANG_TAI = "//h4[text() = 'Thời điểm đăng tải']/following-sibling::h3/text()"
     XPATH_GET_THOI_DIEM_DONG_THAU = "//h4[text() = 'Thời điểm đóng thầu']/following-sibling::h3/text()"
+    XPATH_GET_HAN_NOP_HO_SO_DANG_KY = "//h4[text() = 'Hạn nộp hồ sơ đăng ký ']/following-sibling::h3/text()"
     XPATH_GET_TR_TAG_THONG_TIN_CHI_TIET = "//span[text() = 'THÔNG TIN CHI " \
                                           "TIẾT']/../following-sibling::div/div/div/table/tr"
     XPATH_GET_TR_TAG_THAM_DU_THAU = "//span[text() = 'Tham dự thầu']/../following-sibling::div/div/div/table/tr"
     XPATH_GET_TR_TAG_MOI_THAU = "//span[text() = 'MỜI THẦU']/../following-sibling::div/div/div/table/tr"
     XPATH_GET_TR_TAG_BAO_DAM_DU_THAU = "//span[text() = 'BẢO ĐẢM DỰ THẦU']/../following-sibling::div/div/div/table/tr"
+    XPATH_GET_TR_TAG_KET_QUA = "//span[text() = 'Kết quả']/../following-sibling::div/div/div/table/tr"
     XPATH_GET_HINH_THUC_THAU = "//div[@class = 'bg-l2']/h3/text()"
     XPATH_GET_LINKS = "//a[@class = 'container-tittle']/@href"
 
@@ -61,6 +63,10 @@ class DocumentConstants:
     GIA_DU_THAU = "Giá dự thầu (VND)"
     GIA_DU_THAU_SAU_GIAM_GIA = "Giá dự thầu sau giảm giá (VND)"
     MOI_THAU = "Mời thầu"
+    HAN_NOP_HO_SO_DANG_KY = "Hạn nộp hồ sơ đăng ký"
+    LOAI_DU_AN = "Loại dự án"
+    DANH_SACH_FILE_DINH_KEM = "Danh sách file đính kèm"
+    TAI_XUONG = "Tải xuống"
 
 
 class CollectionConstants:

@@ -5,15 +5,9 @@ from .spider_utils import SpiderUtils
 
 
 class AwardResultSpider(scrapy.Spider):
-    name = "bidding_result_spider"
-    start_urls = []
-
-    collection_name = "biddingResults"
-    first_key = "Thông tin chi tiết"
-    second_key = "Số hiệu KHLCNT"
-
-    FROM_PAGE = 1
-    TO_PAGE = 1
+    # Kết quả trúng thầu cho nhà thầu
+    name = "contractor_bidding_result"
+    start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
     DINH_KEM_THONG_BAO = 'Đính kèm thông báo kết quả LCNT'
     LINH_VUC = "Lĩnh vực: "
@@ -37,20 +31,6 @@ class AwardResultSpider(scrapy.Spider):
         format(DocumentConstants.CAC_NHA_THAU_TRUNG_THAU_KHAC)
     XPATH_EXTRACT_RESULT_LINKS = "//a[@class = 'container-tittle']/@href"
     XPATH_EXTRACT_CATEGORY = "//p[text() = '{}']/span/text()".format(LINH_VUC)
-
-    def __init__(self):
-        url = "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=ZoScjIVHJx&p_p_id=luachonnhathau_WAR_bidportlet" \
-              "&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2" \
-              "&_luachonnhathau_WAR_bidportlet_timKiemTheo=1&_luachonnhathau_WAR_bidportlet_time=0" \
-              "&_luachonnhathau_WAR_bidportlet_benMoiThau=&_luachonnhathau_WAR_bidportlet_denNgay" \
-              "=&_luachonnhathau_WAR_bidportlet_tuNgay=&_luachonnhathau_WAR_bidportlet_loaiThongTin=8" \
-              "&_luachonnhathau_WAR_bidportlet_searchText=&_luachonnhathau_WAR_bidportlet_sapXep=DESC" \
-              "&_luachonnhathau_WAR_bidportlet_currentPage={}&_luachonnhathau_WAR_bidportlet_dongMo=0" \
-              "&_luachonnhathau_WAR_bidportlet_nguonVon=1&_luachonnhathau_WAR_bidportlet_hinhThuc=1" \
-              "&_luachonnhathau_WAR_bidportlet_displayItem=10&_luachonnhathau_WAR_bidportlet_linhVuc=-1" \
-              "&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list "
-        for i in range(self.FROM_PAGE, self.TO_PAGE + 1):
-            self.start_urls.append(url.format(i))
 
     def parse(self, response):
         result_links = response.xpath(self.XPATH_EXTRACT_RESULT_LINKS).extract()

@@ -1,42 +1,19 @@
 import scrapy
 import logging
 from .spider_constants import DocumentConstants
+from .spider_utils import SpiderUtils
 
 class ContractorSpider(scrapy.Spider):
-    name = "contractor_spider"
-    collection_name = "contractors"
-    first_key = "Thông tin chung"
-    second_key = "Số ĐKKD"
+    # Thông tin nhà thầu
+    name = "contractor_information"
+    start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
-    FROM_PAGE = 1
-    TO_PAGE = 5000
     THONG_TIN_CHUNG = "THÔNG TIN CHUNG"
     THONG_TIN_NGANH_NGHE = "THÔNG TIN NGÀNH NGHỀ"
     XPATH_GET_THONG_TIN_CHUNG = "//h3[text() = '{}']/following-sibling::div/div/div/table/tr/td"
     XPATH_GET_THONG_TIN_NGANH_NGHE = "//h3[text() = '{}']/following-sibling::div/table/tbody/tr/td"
     GET_TEXT = "text()"
     CSS_GET_CONTRACTOR_LINKS = "strong.color-3 a::attr(href)"
-    page_counter = 0
-    start_urls = []
-
-    def __init__(self):
-        url = 'http://muasamcong.mpi.gov.vn/danh-sach-nha-thau-uoc-phe-duyet?p_auth=Ee1XhBk6wo&p_p_id' \
-              '=nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg&p_p_lifecycle=1&p_p_state=normal' \
-              '&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2' \
-              '&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_tenNhaThau' \
-              '=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_soDkkd' \
-              '=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_denNgay' \
-              '=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_nhaThau=0' \
-              '&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_tuNgay' \
-              '=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_date2' \
-              '=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_currentPage={' \
-              '}&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_thanhPho=0' \
-              '&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_displayItem=10' \
-              '&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_date1' \
-              '=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_javax.portlet.action=list '
-
-        for i in range(self.FROM_PAGE, self.TO_PAGE + 1):
-            self.start_urls.append(url.format(i))
 
     def parse(self, response):
         logging.debug('response url: ' + response.url)

@@ -8,7 +8,8 @@ def get_column_name(response, xpath_get_column_name):
 
 
 class ShortListingSpider(scrapy.Spider):
-    name = "short_listing_spider"
+    # Danh sách ngắn cho nhà thầu
+    name = "contractor_short_listing"
     start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
     XPATH_GET_TR_TAG_THONG_TIN_CHUNG = "//div/div/section[2]/div/div/div[2]/div[1]/div[1]/div/div/table/tr"

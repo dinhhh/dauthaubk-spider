@@ -7,9 +7,9 @@
 # useful for handling different item types with a single interface
 import pymongo
 import logging
-from .spiders.bidding_result_spider import AwardResultSpider
+from .spiders.contractor_bidding_result import AwardResultSpider
 from .spiders.spider_constants import DocumentConstants, CollectionConstants
-from .spiders.online_bid_opening_result_spider import OnlineBidOpeningResultSpider
+from .spiders.contractor_online_bidding_result import OnlineBidOpeningResultSpider
 
 class BidScrapePipeline:
     def process_item(self, item, spider):
