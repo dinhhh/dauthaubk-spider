@@ -1,7 +1,7 @@
 contractor_bidding_invitation:
   base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=T3MvHbz04y&p_p_id=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_denNgay=&_luachonnhathau_WAR_bidportlet_tuNgay=&_luachonnhathau_WAR_bidportlet_sapXep=DESC&_luachonnhathau_WAR_bidportlet_nguonVon=1&_luachonnhathau_WAR_bidportlet_hinhThuc=1&_luachonnhathau_WAR_bidportlet_displayItem=10&_luachonnhathau_WAR_bidportlet_chuDauTu=&_luachonnhathau_WAR_bidportlet_nhaThauIndex=nhaThauIndex&_luachonnhathau_WAR_bidportlet_timKiemTheo=&_luachonnhathau_WAR_bidportlet_benMoiThau=&_luachonnhathau_WAR_bidportlet_time=-1&_luachonnhathau_WAR_bidportlet_currentPage2={}&_luachonnhathau_WAR_bidportlet_currentPage1={}&_luachonnhathau_WAR_bidportlet_loaiThongTin=3&_luachonnhathau_WAR_bidportlet_searchText=&_luachonnhathau_WAR_bidportlet_dongMo=0&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 10
+  to_page: 50
   first_key: "Thông tin chi tiết"
   second_key: "Số hiệu KHLCNT"
   collection_name: "contractorBiddingInvitations"
@@ -9,7 +9,7 @@ contractor_bidding_invitation:
 contractor_bidding_correction:
   base_url: "https://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=mdWmkcpYh6&p_p_id=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_timKiemTheo=1&_luachonnhathau_WAR_bidportlet_time=0&_luachonnhathau_WAR_bidportlet_benMoiThau=&_luachonnhathau_WAR_bidportlet_denNgay=&_luachonnhathau_WAR_bidportlet_tuNgay=&_luachonnhathau_WAR_bidportlet_loaiThongTin=4&_luachonnhathau_WAR_bidportlet_searchText=&_luachonnhathau_WAR_bidportlet_sapXep=DESC&_luachonnhathau_WAR_bidportlet_currentPage={}&_luachonnhathau_WAR_bidportlet_nguonVon=1&_luachonnhathau_WAR_bidportlet_hinhThuc=1&_luachonnhathau_WAR_bidportlet_displayItem=10&_luachonnhathau_WAR_bidportlet_linhVuc=-1&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 2
+  to_page: 50
   first_key: "Thông tin chi tiết"
   second_key: "Số TBMT"
   collection_name: "contractorBiddingCorrections"
@@ -17,7 +17,7 @@ contractor_bidding_correction:
 contractor_bidding_result:
   base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=ZoScjIVHJx&p_p_id=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_timKiemTheo=1&_luachonnhathau_WAR_bidportlet_time=0&_luachonnhathau_WAR_bidportlet_benMoiThau=&_luachonnhathau_WAR_bidportlet_denNgay=&_luachonnhathau_WAR_bidportlet_tuNgay=&_luachonnhathau_WAR_bidportlet_loaiThongTin=8&_luachonnhathau_WAR_bidportlet_searchText=&_luachonnhathau_WAR_bidportlet_sapXep=DESC&_luachonnhathau_WAR_bidportlet_currentPage={}&_luachonnhathau_WAR_bidportlet_dongMo=0&_luachonnhathau_WAR_bidportlet_nguonVon=1&_luachonnhathau_WAR_bidportlet_hinhThuc=1&_luachonnhathau_WAR_bidportlet_displayItem=10&_luachonnhathau_WAR_bidportlet_linhVuc=-1&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 10
+  to_page: 1000
   first_key: "Thông tin chi tiết"
   second_key: "Số hiệu KHLCNT"
   collection_name: "contractorBiddingResults"
@@ -25,23 +25,23 @@ contractor_bidding_result:
 contractor_information:
   base_url: "http://muasamcong.mpi.gov.vn/danh-sach-nha-thau-uoc-phe-duyet?p_auth=Ee1XhBk6wo&p_p_id=nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_tenNhaThau=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_soDkkd=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_denNgay=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_nhaThau=0&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_tuNgay=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_date2=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_currentPage={}&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_thanhPho=0&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_displayItem=10&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_date1=&_nhathauduocpheduyet_WAR_resourcesportlet_INSTANCE_CgxbQgdVGxlg_javax.portlet.action=list"
   from_page: 1
-  to_page: 10
+  to_page: 50
   first_key: "Thông tin chung"
   second_key: "Số ĐKKD"
   collection_name: "contractorInformation"
 
 contractor_online_bidding_result:
-  base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=CuAKQjjjiE&p_p_id=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_id=128046&_luachonnhathau_WAR_bidportlet_name=7&_luachonnhathau_WAR_bidportlet_javax.portlet.action=detail"
+  base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=aes75UfK6u&p_p_id=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_timKiemTheo=6&_luachonnhathau_WAR_bidportlet_time=0&_luachonnhathau_WAR_bidportlet_benMoiThau=&_luachonnhathau_WAR_bidportlet_denNgay=&_luachonnhathau_WAR_bidportlet_tuNgay=&_luachonnhathau_WAR_bidportlet_loaiThongTin=7&_luachonnhathau_WAR_bidportlet_searchText=&_luachonnhathau_WAR_bidportlet_sapXep=DESC&_luachonnhathau_WAR_bidportlet_currentPage={}&_luachonnhathau_WAR_bidportlet_dongMo=0&_luachonnhathau_WAR_bidportlet_nguonVon=1&_luachonnhathau_WAR_bidportlet_hinhThuc=1&_luachonnhathau_WAR_bidportlet_displayItem=10&_luachonnhathau_WAR_bidportlet_linhVuc=-1&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 10
+  to_page: 50
   first_key: "Thông tin chi tiết"
-  second_key: "Số TBMST"
+  second_key: "Số TBMT"
   collection_name: "contractorOnlineBiddingResults"
 
 contractor_pre_qualification_result:
   base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=CuAKQjjjiE&p_p_id=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_timKiemTheo=1&_luachonnhathau_WAR_bidportlet_time=0&_luachonnhathau_WAR_bidportlet_benMoiThau=&_luachonnhathau_WAR_bidportlet_denNgay=&_luachonnhathau_WAR_bidportlet_tuNgay=&_luachonnhathau_WAR_bidportlet_loaiThongTin=6&_luachonnhathau_WAR_bidportlet_searchText=&_luachonnhathau_WAR_bidportlet_sapXep=DESC&_luachonnhathau_WAR_bidportlet_currentPage={}&_luachonnhathau_WAR_bidportlet_dongMo=0&_luachonnhathau_WAR_bidportlet_nguonVon=1&_luachonnhathau_WAR_bidportlet_hinhThuc=1&_luachonnhathau_WAR_bidportlet_displayItem=10&_luachonnhathau_WAR_bidportlet_linhVuc=-1&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 10
+  to_page: 50
   first_key: "Thông tin chi tiết"
   second_key: "Số TBMST"
   collection_name: "contractorPreQualificationResults"
@@ -49,7 +49,7 @@ contractor_pre_qualification_result:
 contractor_selection_plan:
   base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=MU4CklVCZI&p_p_id=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_timKiemTheo=1&_luachonnhathau_WAR_bidportlet_time=3&_luachonnhathau_WAR_bidportlet_denNgay=14-11-2021&_luachonnhathau_WAR_bidportlet_tuNgay=14-05-2021&_luachonnhathau_WAR_bidportlet_loaiThongTin=1&_luachonnhathau_WAR_bidportlet_searchText=&_luachonnhathau_WAR_bidportlet_sapXep=DESC&_luachonnhathau_WAR_bidportlet_currentPage={}&_luachonnhathau_WAR_bidportlet_dongMo=0&_luachonnhathau_WAR_bidportlet_displayItem=10&_luachonnhathau_WAR_bidportlet_chuDauTu=&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 10
+  to_page: 50
   first_key: "Thông tin chi tiết"
   second_key: "Số KHLCNT"
   collection_name: "contractorSelectionPlans"
@@ -57,7 +57,7 @@ contractor_selection_plan:
 contractor_short_listing:
   base_url: "https://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=s1xsRBGf6N&p_p_id=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_timKiemTheo=1&_luachonnhathau_WAR_bidportlet_time=0&_luachonnhathau_WAR_bidportlet_benMoiThau=&_luachonnhathau_WAR_bidportlet_denNgay=&_luachonnhathau_WAR_bidportlet_tuNgay=&_luachonnhathau_WAR_bidportlet_loaiThongTin=5&_luachonnhathau_WAR_bidportlet_searchText=&_luachonnhathau_WAR_bidportlet_sapXep=DESC&_luachonnhathau_WAR_bidportlet_currentPage={}&_luachonnhathau_WAR_bidportlet_dongMo=0&_luachonnhathau_WAR_bidportlet_nguonVon=1&_luachonnhathau_WAR_bidportlet_hinhThuc=1&_luachonnhathau_WAR_bidportlet_displayItem=10&_luachonnhathau_WAR_bidportlet_linhVuc=-1&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 10
+  to_page: 50
   first_key: "Thông tin chung"
   second_key: "Số TBMT"
   collection_name: "contractorShortListings"
@@ -65,7 +65,7 @@ contractor_short_listing:
 investor_project_listing_announcement:
   base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-au-tu?p_auth=UE69bxdM77&p_p_id=luachonnhadautu_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhadautu_WAR_bidportlet_timKiemTheo=0&_luachonnhadautu_WAR_bidportlet_time=-1&_luachonnhadautu_WAR_bidportlet_denNgay=&_luachonnhadautu_WAR_bidportlet_tuNgay=&_luachonnhadautu_WAR_bidportlet_loaiThongTin=1&_luachonnhadautu_WAR_bidportlet_searchText=&_luachonnhadautu_WAR_bidportlet_sapXep=DESC&_luachonnhadautu_WAR_bidportlet_currentPage={}&_luachonnhadautu_WAR_bidportlet_dongMo=0&_luachonnhadautu_WAR_bidportlet_displayItem=10&_luachonnhadautu_WAR_bidportlet_chuDauTu=&_luachonnhadautu_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 10
+  to_page: 50
   first_key: "Thông tin chi tiết"
   second_key: "Số CBDMDA"
   collection_name: "investorProjectListingAnnouncements"
@@ -73,7 +73,7 @@ investor_project_listing_announcement:
 investor_pre_qualification_announcement:
   base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-au-tu?p_auth=UE69bxdM77&p_p_id=luachonnhadautu_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhadautu_WAR_bidportlet_timKiemTheo=0&_luachonnhadautu_WAR_bidportlet_time=-1&_luachonnhadautu_WAR_bidportlet_currentPage2=1&_luachonnhadautu_WAR_bidportlet_currentPage1={}&_luachonnhadautu_WAR_bidportlet_denNgay=&_luachonnhadautu_WAR_bidportlet_tuNgay=&_luachonnhadautu_WAR_bidportlet_loaiThongTin=2&_luachonnhadautu_WAR_bidportlet_searchText=&_luachonnhadautu_WAR_bidportlet_sapXep=DESC&_luachonnhadautu_WAR_bidportlet_currentPage=1&_luachonnhadautu_WAR_bidportlet_dongMo=1&_luachonnhadautu_WAR_bidportlet_displayItem=10&_luachonnhadautu_WAR_bidportlet_chuDauTu=&_luachonnhadautu_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 20
+  to_page: 50
   first_key: "Thông tin chi tiết"
   second_key: "Số TBMST"
   collection_name: "investorPreQualificationAnnouncements"
@@ -81,7 +81,7 @@ investor_pre_qualification_announcement:
 investor_selection_plan:
   base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-au-tu?p_auth=QXDaqCFyee&p_p_id=luachonnhadautu_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhadautu_WAR_bidportlet_timKiemTheo=0&_luachonnhadautu_WAR_bidportlet_time=-1&_luachonnhadautu_WAR_bidportlet_denNgay=&_luachonnhadautu_WAR_bidportlet_tuNgay=&_luachonnhadautu_WAR_bidportlet_loaiThongTin=3&_luachonnhadautu_WAR_bidportlet_searchText=&_luachonnhadautu_WAR_bidportlet_sapXep=DESC&_luachonnhadautu_WAR_bidportlet_currentPage={}&_luachonnhadautu_WAR_bidportlet_dongMo=0&_luachonnhadautu_WAR_bidportlet_displayItem=10&_luachonnhadautu_WAR_bidportlet_chuDauTu=&_luachonnhadautu_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 20
+  to_page: 50
   first_key: "Thông tin chi tiết"
   second_key: "Số KHLCNĐT"
   collection_name: "investorSelectionPlans"
@@ -97,7 +97,7 @@ investor_bidding_notification:
 investor_selection_result:
   base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-au-tu?p_auth=QXDaqCFyee&p_p_id=luachonnhadautu_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhadautu_WAR_bidportlet_timKiemTheo=1&_luachonnhadautu_WAR_bidportlet_time=-1&_luachonnhadautu_WAR_bidportlet_denNgay=&_luachonnhadautu_WAR_bidportlet_tuNgay=&_luachonnhadautu_WAR_bidportlet_loaiThongTin=5&_luachonnhadautu_WAR_bidportlet_searchText=&_luachonnhadautu_WAR_bidportlet_sapXep=DESC&_luachonnhadautu_WAR_bidportlet_currentPage={}&_luachonnhadautu_WAR_bidportlet_dongMo=0&_luachonnhadautu_WAR_bidportlet_displayItem=10&_luachonnhadautu_WAR_bidportlet_chuDauTu=&_luachonnhadautu_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 20
+  to_page: 50
   first_key: "Thông tin chi tiết"
   second_key: "Số TBMT"
   collection_name: "investorSelectionResults"
@@ -105,7 +105,7 @@ investor_selection_result:
 investor_pre_qualification_result:
   base_url: "http://muasamcong.mpi.gov.vn/lua-chon-nha-au-tu?p_auth=QXDaqCFyee&p_p_id=luachonnhadautu_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhadautu_WAR_bidportlet_timKiemTheo=0&_luachonnhadautu_WAR_bidportlet_time=-1&_luachonnhadautu_WAR_bidportlet_denNgay=&_luachonnhadautu_WAR_bidportlet_tuNgay=&_luachonnhadautu_WAR_bidportlet_loaiThongTin=6&_luachonnhadautu_WAR_bidportlet_searchText=&_luachonnhadautu_WAR_bidportlet_sapXep=DESC&_luachonnhadautu_WAR_bidportlet_currentPage={}&_luachonnhadautu_WAR_bidportlet_dongMo=0&_luachonnhadautu_WAR_bidportlet_displayItem=10&_luachonnhadautu_WAR_bidportlet_chuDauTu=&_luachonnhadautu_WAR_bidportlet_linhVuc=L%E1%BB%B1a+ch%E1%BB%8Dn+nh%C3%A0+%C4%91%E1%BA%A7u+t%C6%B0&_luachonnhadautu_WAR_bidportlet_javax.portlet.action=list"
   from_page: 1
-  to_page: 10
+  to_page: 50
   first_key: "Thông tin chi tiết"
   second_key: "Số TBMST"
   collection_name: "investorPreQualificationResults"
@@ -113,7 +113,7 @@ investor_pre_qualification_result:
 investors_information:
   base_url: "http://muasamcong.mpi.gov.vn/danh-sach-ben-moi-thau?p_auth=hyxiiKQ8En&p_p_id=benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb_boBanNganh=0&_benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb_maCoQuan=&_benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb_denNgay=&_benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb_tuNgay=&_benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb_tapDoan=0&_benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb_searchText=&_benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb_currentPage={}&_benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb_thanhPho=0&_benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb_displayItem=10&_benmoithau_WAR_resourcesportlet_INSTANCE_hSJpefpjz7tb_javax.portlet.action=list"
   from_page: 1
-  to_page: 1
+  to_page: 50
   first_key: "Thông tin chung"
   second_key: "Mã cơ quan"
   collection_name: "investorInformation"

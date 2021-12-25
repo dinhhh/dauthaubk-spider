@@ -11,7 +11,9 @@ class OnlineBidOpeningResultSpider(scrapy.Spider):
     XPATH_EXTRACT_RESULT_LINKS = "//strong[@class = 'text-up color-1 ellipsis-content-1row']/a/@href"
 
     def parse(self, response):
+        self.log("Contractor_online_bidding_result is crawling")
         links = response.xpath(self.XPATH_EXTRACT_RESULT_LINKS).extract()
+        self.log("Link: {}".format(links))
         if links is not None:
             for link in links:
                 yield scrapy.Request(link, callback=self.parse_a_result)
@@ -24,5 +26,5 @@ class OnlineBidOpeningResultSpider(scrapy.Spider):
             DocumentConstants.KET_QUA: SpiderUtils.parse_a_complex_table_with_out_attach_file(
                 response=response,
                 xpath_extract_table=self.XPATH_EXTRACT_KET_QUA
-            )
+            ),
         }

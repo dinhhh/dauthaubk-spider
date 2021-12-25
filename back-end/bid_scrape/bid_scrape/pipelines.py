@@ -93,46 +93,65 @@ class MongoPipeline:
             raise Exception("[Spider exception] Collection name, filter key, first key or second key is None")
 
         if spider.name == AwardResultSpider.name:
-            logging.info("Start update contractor history...")
-            contractor_name = item.get(DocumentConstants.KET_QUA, {}).\
-                get(DocumentConstants.NHA_THAU_TRUNG_THAU)
-            if contractor_name is None:
-                raise Exception("[Spider exception] Bidding result doesn't have result")
-            add_to_set_item = build_contractor_history_item(item)
+            self.update_contractor_history_collection(item)
+
+        # TODO: Tạo collection mới chỉ lưu trữ thông tin giá các mặt hàng mà nhà thầu từng trúng thầu -> Tìm giá dễ hơn
+        # Bổ sung thêm kết quả mở thầu điện tử vào collection đó
+
+        if spider.name == OnlineBidOpeningResultSpider.name:
+            self.update_contractor_history_with_online_bidding(item)
+
+    def update_contractor_history_with_online_bidding(self, item):
+        logging.info("Start update contractor history... with item {}".format(item))
+        if len(item.get(DocumentConstants.KET_QUA, [])) == 0:
+            raise Exception("[Spider exception] Bidding result doesn't have result")
+        contractors_name = [c.get(DocumentConstants.TEN_NHA_THAU) for c in item.get(DocumentConstants.KET_QUA, [])]
+        bid_info = build_bid_info(item=item)
+        logging.info("Add to set in online bid result pipeline")
+        for name in contractors_name:
+            logging.info("name: {}".format(name))
+            index = contractors_name.index(name)
+            result = item.get(DocumentConstants.KET_QUA, [])
+            if len(result) < 1:
+                break
+            bid_info[DocumentConstants.GIA_DU_THAU] = result[index].get(DocumentConstants.GIA_DU_THAU, "")
+            bid_info[DocumentConstants.GIA_DU_THAU_SAU_GIAM_GIA] = result[index].get(
+                DocumentConstants.GIA_DU_THAU_SAU_GIAM_GIA, "")
+            bid_info[DocumentConstants.BAO_DAM_DU_THAU] = result[index].get(
+                DocumentConstants.BAO_DAM_DU_THAU, "")
+
+            co_winning = []
+            for co_winning_name in list(filter(lambda c: c != name, contractors_name)):
+                co_winning.append({
+                    DocumentConstants.TEN_NHA_THAU: co_winning_name,
+                    DocumentConstants.GIA_GOI_THAU: ""
+                })
+            bid_info[DocumentConstants.CAC_NHA_THAU_TRUNG_THAU_KHAC] = co_winning
+            logging.info("Adding item {}".format(bid_info))
+            self.db[CollectionConstants.ONLINE_BIDDING_OPEN_RESULT].update(
+                {DocumentConstants.TEN_NHA_THAU: name},
+                {"$addToSet": {DocumentConstants.GOI_THAU_DA_THAM_GIA: bid_info}},
+                upsert=True
+            )
+
+    def update_contractor_history_collection(self, item):
+        logging.info("Start update contractor history...")
+        contractor_name = item.get(DocumentConstants.KET_QUA, {}). \
+            get(DocumentConstants.NHA_THAU_TRUNG_THAU)
+        if contractor_name is None:
+            raise Exception("[Spider exception] Bidding result doesn't have result")
+        add_to_set_item = build_contractor_history_item(item)
+        # Xét trường hợp gói thầu update -> ko cần insert vào database
+        query = {'Gói thầu đã tham gia.Số hiệu KHLCNT': add_to_set_item[DocumentConstants.SO_HIEU_KHLCNT]}
+        exist_contractor = self.db[CollectionConstants.CONTRACTOR_HISTORY].find(query)
+        if len(list(exist_contractor)) > 0:
+            # Gói thầu đã được thêm vào lịch sử của nhà thầu
+            logging.info("This bidding result already exist with contractor history {}")
+            for exist in exist_contractor:
+                print(exist)
+        else:
             self.db[CollectionConstants.CONTRACTOR_HISTORY].update(
                 {DocumentConstants.TEN_NHA_THAU: contractor_name},
                 {"$addToSet": {DocumentConstants.GOI_THAU_DA_THAM_GIA: add_to_set_item}},
                 upsert=True
             )
-        if spider.name == OnlineBidOpeningResultSpider.name:
-            logging.info("Start update contractor history...")
-            if len(item.get(DocumentConstants.KET_QUA, [])) == 0:
-                raise Exception("[Spider exception] Bidding result doesn't have result")
-            contractors_name = [c.get(DocumentConstants.TEN_NHA_THAU) for c in item.get(DocumentConstants.KET_QUA, [])]
-            bid_info = build_bid_info(item=item)
-            logging.info("Add to set in online bid result pipeline")
-            for name in contractors_name:
-                logging.info("name: {}".format(name))
-                index = contractors_name.index(name)
-                result = item.get(DocumentConstants.KET_QUA, [])
-                if len(result) < 1:
-                    break
-                bid_info[DocumentConstants.GIA_DU_THAU] = result[index].get(DocumentConstants.GIA_DU_THAU, "")
-                bid_info[DocumentConstants.GIA_DU_THAU_SAU_GIAM_GIA] = result[index].get(
-                    DocumentConstants.GIA_DU_THAU_SAU_GIAM_GIA, "")
-                bid_info[DocumentConstants.BAO_DAM_DU_THAU] = result[index].get(
-                    DocumentConstants.BAO_DAM_DU_THAU, "")
-
-                co_winning = []
-                for co_winning_name in list(filter(lambda c: c != name, contractors_name)):
-                    co_winning.append({
-                        DocumentConstants.TEN_NHA_THAU: co_winning_name,
-                        DocumentConstants.GIA_GOI_THAU: ""
-                    })
-                bid_info[DocumentConstants.CAC_NHA_THAU_TRUNG_THAU_KHAC] = co_winning
-                logging.info("Adding item {}".format(bid_info))
-                self.db[CollectionConstants.CONTRACTOR_HISTORY].update(
-                    {DocumentConstants.TEN_NHA_THAU: name},
-                    {"$addToSet": {DocumentConstants.GOI_THAU_DA_THAM_GIA: bid_info}},
-                    upsert=True
-                )

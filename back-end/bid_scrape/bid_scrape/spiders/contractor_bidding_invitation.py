@@ -8,7 +8,7 @@ class InvitationBidSpider(scrapy.Spider):
     name = "contractor_bidding_invitation"
     base_url = "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=T3MvHbz04y&p_p_id=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_denNgay=&_luachonnhathau_WAR_bidportlet_tuNgay=&_luachonnhathau_WAR_bidportlet_sapXep=DESC&_luachonnhathau_WAR_bidportlet_nguonVon=1&_luachonnhathau_WAR_bidportlet_hinhThuc=1&_luachonnhathau_WAR_bidportlet_displayItem=10&_luachonnhathau_WAR_bidportlet_chuDauTu=&_luachonnhathau_WAR_bidportlet_nhaThauIndex=nhaThauIndex&_luachonnhathau_WAR_bidportlet_timKiemTheo=&_luachonnhathau_WAR_bidportlet_benMoiThau=&_luachonnhathau_WAR_bidportlet_time=-1&_luachonnhathau_WAR_bidportlet_currentPage2={}&_luachonnhathau_WAR_bidportlet_currentPage1={}&_luachonnhathau_WAR_bidportlet_loaiThongTin=3&_luachonnhathau_WAR_bidportlet_searchText=&_luachonnhathau_WAR_bidportlet_dongMo=0&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list"
     from_page = 1
-    to_page = 10
+    to_page = 50
     first_key = "Thông tin chi tiết"
     second_key = "Số hiệu KHLCNT"
     collection_name = "contractorBiddingInvitations"

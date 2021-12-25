@@ -67,10 +67,13 @@ class DocumentConstants:
     LOAI_DU_AN = "Loại dự án"
     DANH_SACH_FILE_DINH_KEM = "Danh sách file đính kèm"
     TAI_XUONG = "Tải xuống"
+    THONG_TIN_NHA_THAU_THAM_DU = "Thông tin nhà thầu tham dự"
 
 
 class CollectionConstants:
     CONTRACTOR_HISTORY = "contractorHistory"
+    ONLINE_BIDDING_OPEN_RESULT = "onlineBiddingOpenResult"
+    CONTRACTOR_BIDDING_COST = "contractorBiddingCost"
 
 
 class JavaScriptConstants:

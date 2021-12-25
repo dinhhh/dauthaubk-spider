@@ -40,6 +40,7 @@ class AwardResultSpider(scrapy.Spider):
         for link, category in zip(result_links, category_list):
             request = scrapy.Request(link, callback=self.parse_a_result, cb_kwargs=dict(category_value=category))
             yield request
+            # TODO:
 
     def parse_a_result(self, response, category_value):
         yield {
