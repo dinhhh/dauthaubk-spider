@@ -5,7 +5,6 @@ from .spider_utils import SpiderUtils
 class ContractorSelectionPlanSpider(scrapy.Spider):
     # Kế hoạch lựa chọn nhà thầu cho nhà thầu
     name = "contractor_selection_plan"
-    start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
     NGAY_DANG_TAI = "Ngày đăng tải"
     NGAY_PHE_DUYET = "Ngày phê duyệt"
@@ -28,9 +27,16 @@ class ContractorSelectionPlanSpider(scrapy.Spider):
 
     GET_TEXT = "text()"
 
+    def __init__(self, single_link=None, start_page=None, end_page=None, *args, **kwargs):
+        super(ContractorSelectionPlanSpider, self).__init__(*args, **kwargs)
+        self.base_url, self.start_urls, self.first_key, self.second_key, self.collection_name, self.crawl_single_link \
+            = SpiderUtils.init_attribute(self.name, single_link, start_page, end_page)
+
     def parse(self, response):
-        self.log('response url: ' + response.url)
-        yield scrapy.Request(response.url, callback=self.parse_a_page)
+        if self.crawl_single_link:
+            yield scrapy.Request(response.url, callback=self.parse_a_plan)
+        else:
+            yield scrapy.Request(response.url, callback=self.parse_a_page)
 
     def parse_a_page(self, response):
         plan_links = response.xpath(self.XPATH_GET_PLAN_LINKS).getall()

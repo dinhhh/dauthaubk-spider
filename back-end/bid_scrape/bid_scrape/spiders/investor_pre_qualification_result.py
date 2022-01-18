@@ -4,14 +4,21 @@ from .spider_utils import SpiderUtils
 
 class InvestorPreQualificationResult(scrapy.Spider):
     name = "investor_pre_qualification_result"
-    start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
     XPATH_EXTRACT_TR_TABLE_TAG = "//table/tbody/tr"
 
+    def __init__(self, single_link=None, start_page=None, end_page=None, *args, **kwargs):
+        super(InvestorPreQualificationResult, self).__init__(*args, **kwargs)
+        self.base_url, self.start_urls, self.first_key, self.second_key, self.collection_name, self.crawl_single_link \
+            = SpiderUtils.init_attribute(self.name, single_link, start_page, end_page)
+
     def parse(self, response):
-        for link, category in self.get_link_and_category(response, self.XPATH_EXTRACT_TR_TABLE_TAG):
-            request = scrapy.Request(link, callback=self.parse_a_page, cb_kwargs=dict(category_value=category))
-            yield request
+        if self.crawl_single_link:
+            yield scrapy.Request(response.url, callback=self.parse_a_page)
+        else:
+            for link, category in self.get_link_and_category(response, self.XPATH_EXTRACT_TR_TABLE_TAG):
+                request = scrapy.Request(link, callback=self.parse_a_page, cb_kwargs=dict(category_value=category))
+                yield request
 
     def parse_a_page(self, response, category_value):
         yield {

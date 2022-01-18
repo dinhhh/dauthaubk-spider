@@ -2,15 +2,25 @@ import scrapy
 from .spider_constants import DocumentConstants, XpathConstants
 from .spider_utils import SpiderUtils
 
+XPATH_EXTRACT_TBODY = "/html/body/div/div/div/div/div[1]/div/div/section[2]/div/div/div[2]/div[2]/div/div/div/div/table/tbody"
+
+
 class PreQualificationAnnouncementSpider(scrapy.Spider):
     #  Thông báo mời thầu / mời sơ tuyển cho nhà đầu tư
     name = "investor_pre_qualification_announcement"
-    start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
+
+    def __init__(self, single_link=None, start_page=None, end_page=None, *args, **kwargs):
+        super(PreQualificationAnnouncementSpider, self).__init__(*args, **kwargs)
+        self.base_url, self.start_urls, self.first_key, self.second_key, self.collection_name, self.crawl_single_link \
+            = SpiderUtils.init_attribute(self.name, single_link, start_page, end_page)
 
     def parse(self, response):
-        links = response.xpath(XpathConstants.XPATH_GET_LINKS).extract()
-        for link in links:
-            yield scrapy.Request(link, callback=self.parse_a_page)
+        if self.crawl_single_link:
+            yield scrapy.Request(response.url, callback=self.parse_a_page)
+        else:
+            links = response.xpath(XpathConstants.XPATH_GET_LINKS).extract()
+            for link in links:
+                yield scrapy.Request(link, callback=self.parse_a_page)
 
     def parse_a_page(self, response):
         yield {
@@ -20,7 +30,7 @@ class PreQualificationAnnouncementSpider(scrapy.Spider):
             ),
             DocumentConstants.DANH_SACH_FILE_DINH_KEM: self.parse_attach_files_table(
                 response=response,
-                xpath_extract_tbody="/html/body/div/div/div/div/div[1]/div/div/section[2]/div/div/div[2]/div[2]/div/div/div/div/table/tbody"
+                xpath_extract_tbody=XPATH_EXTRACT_TBODY
             )
         }
 

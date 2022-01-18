@@ -1,11 +1,13 @@
-import json
+import datetime
 import tkinter as tk
+import tkinter.messagebox
 from tkinter import ttk
-from scrapy.signalmanager import dispatcher
-from scrapy import signals
+from utils import merge_json_file
+import os
+from bid_scrape.spiders.spider_utils import SpiderUtils
+
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from scrapyscript import Job, Processor
 
 END_PAGE = "End page"
 
@@ -35,7 +37,14 @@ OPTION = {"contractor_bidding_correction": "Thông báo gia hạn / đính chín
           "contractor_online_bidding_result": "Kế hoạch mở thầu điện tử",
           # pre qualification result for contractor
           "contractor_selection_plan": "Kế hoạch lựa chọn nhà thầu",
-          "contractor_short_listing": "Danh sách ngắn"}
+          "contractor_short_listing": "Danh sách ngắn",
+          "investor_bidding_notification": "Thông báo mời thầu cho nhà đầu tư",
+          "investor_pre_qualification_announcement": "Thông báo mời thầu / mời sơ tuyển cho nhà đầu tư",
+          "investor_pre_qualification_result": "Kết quả sơ tuyển cho nhà đầu tư",
+          "investor_project_listing_announcement": "Công bố danh mục dự án cho nhà đầu tư",
+          "investor_selection_plan": "Kế hoạch lựa chọn nhà đầu tư",
+          "investor_selection_result": "Kết quả lựa chọn nhà đầu tư",
+          "investors_information": "Thông tin nhà đầu tư"}
 
 
 class tkinterApp(tk.Tk):
@@ -153,9 +162,20 @@ class Page1(tk.Frame):
         link = link_var.get()
         spider_name = list(OPTION.keys())[list(OPTION.values()).index(combobox_selected)]
         settings = get_project_settings()
+        start_time = datetime.datetime.now()
+
         process = CrawlerProcess(settings=settings)
         process.crawl(spider_name, single_link=link)
         process.start()
+
+        end_time = datetime.datetime.now()
+
+        current_path = os.path.dirname(os.path.abspath(__file__))
+        merged_file_name = combobox_selected + "-" + SpiderUtils.get_current_time() + ".json"
+        merge_json_file(start_time, end_time, current_path, merged_file_name)
+        print(f"Merged file name {merged_file_name}")
+
+        tkinter.messagebox.showinfo(f"Crawl file", f"Crawl file is {merged_file_name}")
 
 
 # third window frame page2
@@ -213,9 +233,21 @@ class Page2(tk.Frame):
         print(f"Button clicked from {start_page_var} to {end_page_var} and selected {combobox_selected}")
         settings = get_project_settings()
         spider_name = list(OPTION.keys())[list(OPTION.values()).index(combobox_selected)]
+
+        start_time = datetime.datetime.now()
+
         process = CrawlerProcess(settings=settings)
         process.crawl(spider_name, start_page=start_page_var.get(), end_page=end_page_var.get())
         process.start()
+
+        end_time = datetime.datetime.now()
+
+        current_path = os.path.dirname(os.path.abspath(__file__))
+        merged_file_name = combobox_selected + "-" + SpiderUtils.get_current_time() + ".json"
+        merge_json_file(start_time, end_time, current_path, merged_file_name)
+        print(f"Merged file name {merged_file_name}")
+
+        tkinter.messagebox.showinfo(f"Crawl file", f"Crawl file is {merged_file_name}")
 
 # Driver Code
 app = tkinterApp()

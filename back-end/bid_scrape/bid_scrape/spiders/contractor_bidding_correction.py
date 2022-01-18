@@ -6,14 +6,21 @@ from .spider_constants import XpathConstants, DocumentConstants
 class BiddingExtensionCorrectionSpider(scrapy.Spider):
     # Thông báo gia hạn / đính chính cho nhà thầu
     name = "contractor_bidding_correction"
-    start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
     XPATH_GET_LINKS = "//a[@class = 'container-tittle']/@href"
 
+    def __init__(self, single_link=None, start_page=None, end_page=None, *args, **kwargs):
+        super(BiddingExtensionCorrectionSpider, self).__init__(*args, **kwargs)
+        self.base_url, self.start_urls, self.first_key, self.second_key, self.collection_name, self.crawl_single_link \
+            = SpiderUtils.init_attribute(self.name, single_link, start_page, end_page)
+
     def parse(self, response):
-        links = response.xpath(self.XPATH_GET_LINKS).extract()
-        for link in links:
-            yield scrapy.Request(link, callback=self.parse_a_page)
+        if self.crawl_single_link:
+            yield scrapy.Request(response.url, callback=self.parse_a_page)
+        else:
+            links = response.xpath(self.XPATH_GET_LINKS).extract()
+            for link in links:
+                yield scrapy.Request(link, callback=self.parse_a_page)
 
     def parse_a_page(self, response):
         yield {

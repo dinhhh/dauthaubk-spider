@@ -7,7 +7,6 @@ from .spider_utils import SpiderUtils
 class AwardResultSpider(scrapy.Spider):
     # Kết quả trúng thầu cho nhà thầu
     name = "contractor_bidding_result"
-    start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
     DINH_KEM_THONG_BAO = 'Đính kèm thông báo kết quả LCNT'
     LINH_VUC = "Lĩnh vực: "
@@ -32,15 +31,22 @@ class AwardResultSpider(scrapy.Spider):
     XPATH_EXTRACT_RESULT_LINKS = "//a[@class = 'container-tittle']/@href"
     XPATH_EXTRACT_CATEGORY = "//p[text() = '{}']/span/text()".format(LINH_VUC)
 
+    def __init__(self, single_link=None, start_page=None, end_page=None, *args, **kwargs):
+        super(AwardResultSpider, self).__init__(*args, **kwargs)
+        self.base_url, self.start_urls, self.first_key, self.second_key, self.collection_name, self.crawl_single_link \
+            = SpiderUtils.init_attribute(self.name, single_link, start_page, end_page)
+
     def parse(self, response):
-        result_links = response.xpath(self.XPATH_EXTRACT_RESULT_LINKS).extract()
-        category_list = response.xpath(self.XPATH_EXTRACT_CATEGORY).extract()
-        if len(result_links) != len(category_list):
-            raise Exception("Response url {} parsing error".format(response.url))
-        for link, category in zip(result_links, category_list):
-            request = scrapy.Request(link, callback=self.parse_a_result, cb_kwargs=dict(category_value=category))
-            yield request
-            # TODO:
+        if self.crawl_single_link:
+            yield scrapy.Request(response.url, callback=self.parse_a_result, cb_kwargs=dict(category_value=None))
+        else:
+            result_links = response.xpath(self.XPATH_EXTRACT_RESULT_LINKS).extract()
+            category_list = response.xpath(self.XPATH_EXTRACT_CATEGORY).extract()
+            if len(result_links) != len(category_list):
+                raise Exception("Response url {} parsing error".format(response.url))
+            for link, category in zip(result_links, category_list):
+                request = scrapy.Request(link, callback=self.parse_a_result, cb_kwargs=dict(category_value=category))
+                yield request
 
     def parse_a_result(self, response, category_value):
         yield {

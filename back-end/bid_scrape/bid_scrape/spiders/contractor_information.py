@@ -6,7 +6,6 @@ from .spider_utils import SpiderUtils
 class ContractorSpider(scrapy.Spider):
     # Thông tin nhà thầu
     name = "contractor_information"
-    start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
     THONG_TIN_CHUNG = "THÔNG TIN CHUNG"
     THONG_TIN_NGANH_NGHE = "THÔNG TIN NGÀNH NGHỀ"
@@ -15,9 +14,17 @@ class ContractorSpider(scrapy.Spider):
     GET_TEXT = "text()"
     CSS_GET_CONTRACTOR_LINKS = "strong.color-3 a::attr(href)"
 
+    def __init__(self, single_link=None, start_page=None, end_page=None, *args, **kwargs):
+        super(ContractorSpider, self).__init__(*args, **kwargs)
+        self.base_url, self.start_urls, self.first_key, self.second_key, self.collection_name, self.crawl_single_link \
+            = SpiderUtils.init_attribute(self.name, single_link, start_page, end_page)
+
     def parse(self, response):
         logging.debug('response url: ' + response.url)
-        yield scrapy.Request(response.url, callback=self.parse_a_page)
+        if self.crawl_single_link:
+            yield scrapy.Request(response.url, callback=self.parse_a_contractor)
+        else:
+            yield scrapy.Request(response.url, callback=self.parse_a_page)
 
     def parse_a_page(self, response):
         contractor_links = response.css(self.CSS_GET_CONTRACTOR_LINKS).getall()

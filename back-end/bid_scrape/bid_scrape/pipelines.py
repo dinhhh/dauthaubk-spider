@@ -10,6 +10,13 @@ import logging
 from .spiders.contractor_bidding_result import AwardResultSpider
 from .spiders.spider_constants import DocumentConstants, CollectionConstants
 from .spiders.contractor_online_bidding_result import OnlineBidOpeningResultSpider
+from .spiders.spider_utils import SpiderUtils
+import json
+import os
+import requests
+
+API_USER_BROADCAST = "http://192.168.1.12:5000/api/user/broadcast"
+
 
 class BidScrapePipeline:
     def process_item(self, item, spider):
@@ -89,17 +96,39 @@ class MongoPipeline:
             )
             logging.info("Matched count: {}, modified count: {}"
                          .format(update_result.matched_count, update_result.modified_count))
+            self.save_to_json_file(item=item, spider=spider)
+            response = requests.post(API_USER_BROADCAST,
+                                     json={'collection': spider.collection_name,
+                                           'item': item})
         else:
             raise Exception("[Spider exception] Collection name, filter key, first key or second key is None")
 
         if spider.name == AwardResultSpider.name:
             self.update_contractor_history_collection(item)
 
-        # TODO: Tạo collection mới chỉ lưu trữ thông tin giá các mặt hàng mà nhà thầu từng trúng thầu -> Tìm giá dễ hơn
-        # Bổ sung thêm kết quả mở thầu điện tử vào collection đó
-
         if spider.name == OnlineBidOpeningResultSpider.name:
             self.update_contractor_history_with_online_bidding(item)
+
+    def save_to_json_file(self, item, spider):
+        file_name = SpiderUtils.get_current_time() + '.json'
+        logging.info(f"Saving into file {file_name}")
+
+        try:
+            with open(file_name, 'a', encoding='utf8') as file:
+                self.truncate_utf8_chars(filename=file_name, count=1)
+                if os.path.getsize(file_name) > 0:
+                    file.write(",")
+                else:
+                    file.write("[")
+                json.dump(item, file, ensure_ascii=False)
+                file.write("]")
+
+        except IOError:
+            with open(file_name, 'w', encoding='utf8') as file:
+                file.write("[")
+                json.dump(item, file, ensure_ascii=False)
+                file.write("]")
+
 
     def update_contractor_history_with_online_bidding(self, item):
         logging.info("Start update contractor history... with item {}".format(item))
@@ -155,3 +184,32 @@ class MongoPipeline:
                 {"$addToSet": {DocumentConstants.GOI_THAU_DA_THAM_GIA: add_to_set_item}},
                 upsert=True
             )
+
+
+    def truncate_utf8_chars(self, filename, count, ignore_newlines=True):
+        with open(filename, 'rb+') as f:
+            last_char = None
+
+            size = os.fstat(f.fileno()).st_size
+
+            offset = 1
+            chars = 0
+            while offset <= size:
+                f.seek(-offset, os.SEEK_END)
+                b = ord(f.read(1))
+
+                if ignore_newlines:
+                    if b == 0x0D or b == 0x0A:
+                        offset += 1
+                        continue
+
+                if b & 0b10000000 == 0 or b & 0b11000000 == 0b11000000:
+                    # This is the first byte of a UTF8 character
+                    chars += 1
+                    if chars == count:
+                        # When `count` number of characters have been found, move current position back
+                        # with one byte (to include the byte just checked) and truncate the file
+                        f.seek(-1, os.SEEK_CUR)
+                        f.truncate()
+                        return
+                offset += 1

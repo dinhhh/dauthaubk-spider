@@ -10,7 +10,6 @@ def get_column_name(response, xpath_get_column_name):
 class ShortListingSpider(scrapy.Spider):
     # Danh sách ngắn cho nhà thầu
     name = "contractor_short_listing"
-    start_urls, first_key, second_key, collection_name = SpiderUtils.init_attribute(name)
 
     XPATH_GET_TR_TAG_THONG_TIN_CHUNG = "//div/div/section[2]/div/div/div[2]/div[1]/div[1]/div/div/table/tr"
     XPATH_EXTRACT_SECOND_TABLE = "//div/div/section[2]/div/div/div[2]/div[1]/div[2]/div/div/table"
@@ -18,10 +17,18 @@ class ShortListingSpider(scrapy.Spider):
     XPATH_EXTRACT_TR_TAG_ROW = XPATH_EXTRACT_SECOND_TABLE + "/tbody/tr"
     XPATH_EXTRACT_TEXT_IN_CELL = XPATH_EXTRACT_SECOND_TABLE + "/tbody/tr[{}]/td[{}]/text()"
 
+    def __init__(self, single_link=None, start_page=None, end_page=None, *args, **kwargs):
+        super(ShortListingSpider, self).__init__(*args, **kwargs)
+        self.base_url, self.start_urls, self.first_key, self.second_key, self.collection_name, self.crawl_single_link \
+            = SpiderUtils.init_attribute(self.name, single_link, start_page, end_page)
+
     def parse(self, response):
-        links = response.xpath(XpathConstants.XPATH_GET_LINKS).extract()
-        for link in links:
-            yield scrapy.Request(link, callback=self.parse_a_page)
+        if self.crawl_single_link:
+            yield scrapy.Request(response.url, callback=self.parse_a_page)
+        else:
+            links = response.xpath(XpathConstants.XPATH_GET_LINKS).extract()
+            for link in links:
+                yield scrapy.Request(link, callback=self.parse_a_page)
 
     def parse_a_page(self, response):
         yield {

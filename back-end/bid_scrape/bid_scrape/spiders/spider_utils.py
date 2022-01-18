@@ -1,12 +1,16 @@
 import logging
 from .spider_constants import XpathConstants, DocumentConstants, JavaScriptConstants
 import yaml
+from datetime import datetime
+
+DATE_TIME_FORMAT_FOR_OUTPUT_FILE = "%d-%m-%Y-%H:%M:%S"
+
 
 class SpiderUtils:
     LOGGING_TAG = "[Spider Utils]"
 
     @staticmethod
-    def init_attribute(spider_name):
+    def init_attribute(spider_name, single_link=None, start_page=None, end_page=None):
         """ Return order: start_urls, from_page, to_page, first_key, second_key, collection_name """
         from pathlib import Path
         my_path = Path(__file__).resolve()  # resolve to get rid of any symlinks
@@ -20,12 +24,32 @@ class SpiderUtils:
         collection_name = config[spider_name]["collection_name"]
         start_urls = []
         base_url = config[spider_name]["base_url"]
-        for i in range(from_page, to_page + 1):
-            start_urls.append(base_url.format(i))
+        try:
+            for i in range(from_page, to_page + 1):
+                start_urls.append(base_url.format(i))
+        except:
+            start_urls = []
         logging.info(SpiderUtils.LOGGING_TAG + "base_url {} from_page {} to_page {} first_key {} second_key {} "
                                                "collection_name {}".format(base_url, from_page, to_page, first_key,
                                                                            second_key, collection_name))
-        return start_urls, first_key, second_key, collection_name
+        crawl_single_link = False
+
+        if single_link is not None:
+            start_urls.clear()
+            start_urls.append(single_link)
+            crawl_single_link = True
+            logging.info(f"Start url {start_urls}")
+
+        if start_page is not None and end_page is not None:
+            start_urls.clear()
+            try:
+                for page in range(start_page, end_page + 1):
+                    start_urls.append(base_url.format(page))
+            except:
+                logging.info(f"Error when init attribute")
+            logging.info(f"Crawl from {start_page} to {end_page}")
+
+        return base_url, start_urls, first_key, second_key, collection_name, crawl_single_link
 
     @staticmethod
     def parse_a_table_with_out_attach_file(response, xpath_extract_table):
@@ -344,3 +368,7 @@ class SpiderUtils:
     def extract_first_with_none_check(response, xpath):
         result = response.xpath(xpath).extract()
         return result[0] if result is not None and len(result) != 0 else ""
+
+    @staticmethod
+    def get_current_time():
+        return datetime.now().strftime(DATE_TIME_FORMAT_FOR_OUTPUT_FILE)

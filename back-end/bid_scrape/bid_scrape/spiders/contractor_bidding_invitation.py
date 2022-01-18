@@ -1,3 +1,5 @@
+from subprocess import call
+
 import scrapy
 from .spider_constants import DocumentConstants, XpathConstants
 from .spider_utils import SpiderUtils
@@ -6,19 +8,19 @@ from .spider_utils import SpiderUtils
 class InvitationBidSpider(scrapy.Spider):
     # Thông báo mời thầu cho nhà thầu
     name = "contractor_bidding_invitation"
-    base_url = "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=T3MvHbz04y&p_p_id=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_denNgay=&_luachonnhathau_WAR_bidportlet_tuNgay=&_luachonnhathau_WAR_bidportlet_sapXep=DESC&_luachonnhathau_WAR_bidportlet_nguonVon=1&_luachonnhathau_WAR_bidportlet_hinhThuc=1&_luachonnhathau_WAR_bidportlet_displayItem=10&_luachonnhathau_WAR_bidportlet_chuDauTu=&_luachonnhathau_WAR_bidportlet_nhaThauIndex=nhaThauIndex&_luachonnhathau_WAR_bidportlet_timKiemTheo=&_luachonnhathau_WAR_bidportlet_benMoiThau=&_luachonnhathau_WAR_bidportlet_time=-1&_luachonnhathau_WAR_bidportlet_currentPage2={}&_luachonnhathau_WAR_bidportlet_currentPage1={}&_luachonnhathau_WAR_bidportlet_loaiThongTin=3&_luachonnhathau_WAR_bidportlet_searchText=&_luachonnhathau_WAR_bidportlet_dongMo=0&_luachonnhathau_WAR_bidportlet_javax.portlet.action=list"
-    from_page = 1
-    to_page = 50
-    first_key = "Thông tin chi tiết"
-    second_key = "Số hiệu KHLCNT"
-    collection_name = "contractorBiddingInvitations"
-    start_urls = []
 
-    def __init__(self):
-        for i in range(self.from_page, self.to_page + 1):
-            for j in range(self.from_page, self.to_page + 1):
-                url = self.base_url.format(i, j)
-                self.start_urls.append(url)
+    def __init__(self, single_link=None, start_page=None, end_page=None, *args, **kwargs):
+        super(InvitationBidSpider, self).__init__(*args, **kwargs)
+        self.base_url, self.start_urls, self.first_key, self.second_key, self.collection_name, self.crawl_single_link \
+            = SpiderUtils.init_attribute(self.name, single_link, start_page, end_page)
+
+        # override start urls because of special case
+        if not self.crawl_single_link:
+            self.start_urls.clear()
+            for i in range(start_page, end_page + 1):
+                for j in range(start_page, end_page + 1):
+                    url = self.base_url.format(i, j)
+                    self.start_urls.append(url)
 
     XPATH_EXTRACT_TABLE = "//span[text() = '{}']/../following-sibling::div/div/div/table/tr/td//text()"
     XPATH_EXTRACT_THONG_TIN_CHI_TIET_TABLE = XPATH_EXTRACT_TABLE.format(DocumentConstants.THONG_TIN_CHI_TIET_UPPER_CASE)
@@ -39,7 +41,10 @@ class InvitationBidSpider(scrapy.Spider):
 
     def parse(self, response):
         self.log('response url: ' + response.url)
-        yield scrapy.Request(response.url, callback=self.parse_a_page)
+        if self.crawl_single_link:
+            yield scrapy.Request(response.url, callback=self.parse_a_invitation)
+        else:
+            yield scrapy.Request(response.url, callback=self.parse_a_page)
 
     def parse_a_page(self, response):
         links = response.xpath(self.XPATH_EXTRACT_INVITATION_LINKS).extract()
@@ -49,16 +54,6 @@ class InvitationBidSpider(scrapy.Spider):
 
 
     def parse_a_invitation(self, response):
-        # sample page: "http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=fLHHstYwXU&p_p_id"
-        #           "=luachonnhathau_WAR_bidportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1"
-        #           "&p_p_col_count=2&_luachonnhathau_WAR_bidportlet_id=430244&_luachonnhathau_WAR_bidportlet_name=3"
-        #           "&_luachonnhathau_WAR_bidportlet_javax.portlet.action=detail"
-        #
-        # OR http://muasamcong.mpi.gov.vn/lua-chon-nha-thau?p_auth=5fwIZtRwVT&p_p_id=luachonnhathau_WAR_bidportlet
-        # &p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2
-        # &_luachonnhathau_WAR_bidportlet_id=431548&_luachonnhathau_WAR_bidportlet_name=3
-        # &_luachonnhathau_WAR_bidportlet_javax.portlet.action=detail
-
         item = {DocumentConstants.THONG_TIN_CHI_TIET: SpiderUtils.parse_a_table_with_multi_attach_files(
                     response=response,
                     xpath_get_tr_tag=self.XPATH_GET_TR_TAG_THONG_TIN_CHI_TIET),

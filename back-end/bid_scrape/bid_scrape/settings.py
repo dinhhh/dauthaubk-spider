@@ -12,6 +12,13 @@ BOT_NAME = 'bid_scrape'
 SPIDER_MODULES = ['bid_scrape.spiders']
 NEWSPIDER_MODULE = 'bid_scrape.spiders'
 FEED_EXPORT_ENCODING = 'utf-8'
+# CONCURRENT_REQUESTS = 1
+
+# MongoDB connection
+# MONGO_URI = 'localhost:27017'
+# MONGO_DATABASE = 'DauThau-BK'
+MONGO_URI = "mongodb+srv://dinhhh:IhMxVdQkr7rrDj4f@dauthau-bk.cqscj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+MONGO_DATABASE = 'DauThau-BK'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'bid_scrape (+http://www.yourdomain.com)'
@@ -62,9 +69,10 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'bid_scrape.pipelines.BidScrapePipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'bid_scrape.pipelines.BidScrapePipeline': 300,
+    'bid_scrape.pipelines.MongoPipeline': 800
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
