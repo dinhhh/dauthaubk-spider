@@ -35,7 +35,6 @@ OPTION = {"contractor_bidding_correction": "Thông báo gia hạn / đính chín
           "contractor_bidding_result": "Kết quả trúng thầu",
           "contractor_information": "Thông tin nhà thầu",
           "contractor_online_bidding_result": "Kế hoạch mở thầu điện tử",
-          # pre qualification result for contractor
           "contractor_selection_plan": "Kế hoạch lựa chọn nhà thầu",
           "contractor_short_listing": "Danh sách ngắn",
           "investor_bidding_notification": "Thông báo mời thầu cho nhà đầu tư",
