@@ -17,8 +17,6 @@ FEED_EXPORT_ENCODING = 'utf-8'
 # MongoDB connection
 # MONGO_URI = 'localhost:27017'
 # MONGO_DATABASE = 'DauThau-BK'
-MONGO_URI = "mongodb+srv://dinhhh:IhMxVdQkr7rrDj4f@dauthau-bk.cqscj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-MONGO_DATABASE = 'DauThau-BK'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'bid_scrape (+http://www.yourdomain.com)'
