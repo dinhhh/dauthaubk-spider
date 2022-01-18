@@ -24,13 +24,19 @@
 ## Start crawl in terminal
 - Config your spiders in bid_scrape/bid_scrape/spiders/config.yaml file
   - Range of pages you want to crawl data
-  - Collection name you want to save into database
+  - Collection name
+  - Base url
+  - First key and second key for updating documents purpose only
 
-- Run bid_scrape/main.py file to start crawl data
+- Run bid_scrape/main.py file to run all bots and start crawling
 
 ## Start crawl in UI
-- Run bid_scrape/tkinter_app
-- We have 2 modes, crawl single page and crawl multi pages continuously
+- Run bid_scrape/tkinter_app ![alt](back-end/bid_scrape/assets/images/home.png)
+- We have 2 modes:
+  1. Crawl single page 
+    ![alt](back-end/bid_scrape/assets/images/crawl-spec-page.png)
+  2. Crawl multi pages continuously
+    ![alt](back-end/bid_scrape/assets/images/crawl-range-pages.png)
 
 # Maintenance
 - New scrapy bot: Add its name to OPTION variable in tkinter_app.py to crawl in UI ![alt](/back-end/bid_scrape/assets/images/options.png)
