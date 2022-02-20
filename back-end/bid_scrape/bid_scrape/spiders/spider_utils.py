@@ -3,7 +3,7 @@ from .spider_constants import XpathConstants, DocumentConstants, JavaScriptConst
 import yaml
 from datetime import datetime
 
-DATE_TIME_FORMAT_FOR_OUTPUT_FILE = "%d-%m-%Y-%H:%M:%S"
+DATE_TIME_FORMAT_FOR_OUTPUT_FILE = "%d-%m-%Y-%H-%M-%S"  # change format cause window can't use colons in file names
 
 
 class SpiderUtils:
@@ -15,7 +15,7 @@ class SpiderUtils:
         from pathlib import Path
         my_path = Path(__file__).resolve()  # resolve to get rid of any symlinks
         config_path = my_path.parent / 'config.yaml'
-        with config_path.open() as c:
+        with open(config_path, "r", encoding="utf-8") as c:
             config = yaml.safe_load(c)
         from_page = config[spider_name]["from_page"]
         to_page = config[spider_name]["to_page"]

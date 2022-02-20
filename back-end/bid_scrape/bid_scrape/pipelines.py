@@ -6,6 +6,8 @@
 
 # useful for handling different item types with a single interface
 import pymongo
+import ssl
+from pathlib import Path
 import logging
 from .spiders.contractor_bidding_result import AwardResultSpider
 from .spiders.spider_constants import DocumentConstants, CollectionConstants
@@ -15,7 +17,7 @@ import json
 import os
 import requests
 
-API_USER_BROADCAST = "http://192.168.1.12:5000/api/user/broadcast"
+API_USER_BROADCAST = "localhost:5000/api/user/broadcast"
 
 
 class BidScrapePipeline:
@@ -77,7 +79,8 @@ class MongoPipeline:
         )
 
     def open_spider(self, spider):
-        self.client = pymongo.MongoClient(self.mongo_uri)
+        # self.client = pymongo.MongoClient(self.mongo_uri)  # for linux
+        self.client = pymongo.MongoClient(self.mongo_uri, ssl_cert_reqs=ssl.CERT_NONE)  # for window
         self.db = self.client[self.mongo_db]
 
     def close_spider(self, spider):

@@ -163,19 +163,21 @@ class Page1(tk.Frame):
         settings = get_project_settings()
         start_time = datetime.datetime.now()
 
-        process = CrawlerProcess(settings=settings)
-        process.crawl(spider_name, single_link=link)
-        process.start()
+        try:
+            process = CrawlerProcess(settings=settings)
+            process.crawl(spider_name, single_link=link)
+            process.start()
 
-        end_time = datetime.datetime.now()
+            end_time = datetime.datetime.now()
 
-        current_path = os.path.dirname(os.path.abspath(__file__))
-        merged_file_name = combobox_selected + "-" + SpiderUtils.get_current_time() + ".json"
-        merge_json_file(start_time, end_time, current_path, merged_file_name)
-        print(f"Merged file name {merged_file_name}")
+            current_path = os.path.dirname(os.path.abspath(__file__))
+            merged_file_name = combobox_selected + "-" + SpiderUtils.get_current_time() + ".json"
+            merge_json_file(start_time, end_time, current_path, merged_file_name)
+            print(f"Merged file name {merged_file_name}")
 
-        tkinter.messagebox.showinfo(f"Crawl file", f"Crawl file is {merged_file_name}")
-
+            tkinter.messagebox.showinfo(f"Crawl file", f"Crawl file is {merged_file_name}")
+        except:
+            tkinter.messagebox.showinfo("Error", "Error during crawl this page")
 
 # third window frame page2
 class Page2(tk.Frame):
@@ -235,18 +237,21 @@ class Page2(tk.Frame):
 
         start_time = datetime.datetime.now()
 
-        process = CrawlerProcess(settings=settings)
-        process.crawl(spider_name, start_page=start_page_var.get(), end_page=end_page_var.get())
-        process.start()
+        try:
+            process = CrawlerProcess(settings=settings)
+            process.crawl(spider_name, start_page=start_page_var.get(), end_page=end_page_var.get())
+            process.start()
 
-        end_time = datetime.datetime.now()
+            end_time = datetime.datetime.now()
 
-        current_path = os.path.dirname(os.path.abspath(__file__))
-        merged_file_name = combobox_selected + "-" + SpiderUtils.get_current_time() + ".json"
-        merge_json_file(start_time, end_time, current_path, merged_file_name)
-        print(f"Merged file name {merged_file_name}")
+            current_path = os.path.dirname(os.path.abspath(__file__))
+            merged_file_name = combobox_selected + "-" + SpiderUtils.get_current_time() + ".json"
+            merge_json_file(start_time, end_time, current_path, merged_file_name)
+            print(f"Merged file name {merged_file_name}")
 
-        tkinter.messagebox.showinfo(f"Crawl file", f"Crawl file is {merged_file_name}")
+            tkinter.messagebox.showinfo(f"Crawl file", f"Crawl file is {merged_file_name}")
+        except:
+            tkinter.messagebox.showinfo("Error", "Error during crawl this page")
 
 # Driver Code
 app = tkinterApp()
